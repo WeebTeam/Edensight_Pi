@@ -50,7 +50,12 @@ async def scanForBerryMedDevices():
             # create a task to handle the device async-ly
             # loop continues to search for other devices while the task reads data from
             # the sensor (MULTIPLE DEVICE SUPPORT!!!!)
-            asyncio.create_task(connectToBerryMedDevice(d.address))
+            print("device rssi (dBm)", d.rssi)
+            
+            if d.rssi < -80:
+                print("rssi too low/device too far! will not connect :(")
+            else:
+                asyncio.create_task(connectToBerryMedDevice(d.address))
 
 
 # connects to the device and start sending data to server
@@ -86,8 +91,7 @@ async def connectToBerryMedDevice(address):
             await asyncio.sleep(4.8)
             
     except Exception as e:
-       # print("------------------- EXCEPTION OWO ---------------")
-        #print(e)
+       print(e)
     finally:
         print("disconnecting from", address)
         await client.disconnect()
