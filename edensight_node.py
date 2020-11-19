@@ -150,7 +150,7 @@ def sendDataToServer(address):
         del vitalSignsData[address]
         
         #post to server
-        response = requests.post('https://braserver.mooo.com/edensight/api/vitalsigns/add', data = {'macAddr':address.lower(), 'heartRate':meanData["pulse"], 'spO2':meanData["spo2"]}, auth=(backendUname, backendPasswd))
+        response = requests.post('https://edensight.mooo.com/edensight/api/vitalsigns/add', data = {'macAddr':address.lower(), 'heartRate':meanData["pulse"], 'spO2':meanData["spo2"]}, auth=(backendUname, backendPasswd))
         
         print(address, ":", meanData, "|", response.status_code)
     else:
